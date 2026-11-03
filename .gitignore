@@ -5,3 +5,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Package & class files
+*.class
+*.jar
+*.war
+*.zip
