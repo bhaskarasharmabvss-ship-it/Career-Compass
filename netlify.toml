@@ -1,0 +1,5 @@
+# Career Compass is a plain static site (HTML/CSS/JS) with no build step.
+# These settings override the dashboard's "npm run build" / "dist" defaults.
+[build]
+  publish = "."
+  command = "echo 'Static site - no build step required'"
