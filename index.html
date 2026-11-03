@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Career Compass — Intelligent AI-Powered Skill & Career Recommendation Platform for Intermediate (10+2) and College Students. Personalized guidance, 6-stage roadmaps, and skill-gap diagnostics.">
+  <title>Career Compass — AI-Powered Skill & Career Guidance Platform</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/views.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="nav-container">
+      <!-- Brand Logo -->
+      <a href="javascript:void(0)" class="nav-brand" onclick="App.navigate('home')" aria-label="CareerCompass Home">
+        <div class="brand-icon">🧭</div>
+        <div class="brand-text">Career<span>Compass</span></div>
+      </a>
+
+      <!-- Desktop Navigation Links (Simplified per specs) -->
+      <ul class="nav-links" id="desktopNavLinks">
+        <li><a href="javascript:void(0)" class="nav-link active" data-route="home" onclick="App.navigate('home')">Home</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="assessment" onclick="App.navigate('assessment')">Assessment</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="careers" onclick="App.navigate('careers')">Careers</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="roadmap" onclick="App.navigate('roadmap')">Roadmap</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="projects" onclick="App.navigate('projects')">Projects</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="resources" onclick="App.navigate('resources')">Resources</a></li>
+        <li><a href="javascript:void(0)" class="nav-link" data-route="dashboard" onclick="App.navigate('dashboard')">Dashboard</a></li>
+
+        <!-- Secondary Features under More Dropdown -->
+        <li class="nav-dropdown" id="navMoreDropdown">
+          <button class="nav-dropdown-btn" id="navMoreBtn" onclick="App.toggleMoreDropdown(event)" aria-haspopup="true" aria-expanded="false" title="More Features">
+            <span>More</span>
+            <span class="dropdown-chevron">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" id="navMoreMenu" role="menu">
+            <a href="javascript:void(0)" class="nav-dropdown-item" data-route="courses" onclick="App.navigate('courses'); App.closeMoreDropdown();" role="menuitem">
+              <span>🎓</span> Explore Courses
+            </a>
+            <a href="javascript:void(0)" class="nav-dropdown-item" data-route="skill-gap" onclick="App.navigate('skill-gap'); App.closeMoreDropdown();" role="menuitem">
+              <span>📐</span> Skill-Gap Diagnostic
+            </a>
+            <a href="javascript:void(0)" class="nav-dropdown-item" data-route="mapping" onclick="App.navigate('mapping'); App.closeMoreDropdown();" role="menuitem">
+              <span>🗺️</span> Pathway Map
+            </a>
+            <a href="javascript:void(0)" class="nav-dropdown-item" data-route="prep" onclick="App.navigate('prep'); App.closeMoreDropdown();" role="menuitem">
+              <span>🎯</span> Placement & Interview Prep
+            </a>
+            <a href="javascript:void(0)" class="nav-dropdown-item" data-route="compare" onclick="App.navigate('compare'); App.closeMoreDropdown();" role="menuitem">
+              <span>⚖️</span> Compare Courses
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Nav Actions (Role Switcher, Notifications, Theme, Profile) -->
+      <div class="nav-actions">
+        <!-- Separated Administrator Access Gate -->
+        <div id="navAdminSlot" class="flex items-center">
+          <!-- Populated dynamically: either "🔒 Admin" button or "🛡️ Admin [Sign Out]" badge -->
+        </div>
+
+        <!-- Notification Bell -->
+        <button class="notification-btn" id="navNotificationBtn" onclick="App.toggleNotificationPanel()" title="Alerts & Deadlines" aria-label="Notifications">
+          🔔
+          <span class="notification-badge" id="navNotificationBadge">3</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="App.toggleTheme()" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+          <span id="themeToggleIcon">🌙</span>
+        </button>
+
+        <!-- Profile Avatar Button -->
+        <button class="nav-avatar-btn" onclick="App.navigate('profile')" title="Student Profile" aria-label="View Student Profile">
+          <div class="nav-avatar-img">👨‍🎓</div>
+          <span class="nav-avatar-label">Profile</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-nav-toggle" id="mobileNavToggleBtn" onclick="App.toggleMobileDrawer()" title="Open Navigation Menu" aria-label="Toggle mobile menu" aria-expanded="false">
+          ☰
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Drawer Overlay & Panel -->
+  <div class="mobile-drawer-backdrop" id="mobileNavBackdrop" onclick="App.closeMobileDrawer()"></div>
+  <aside class="mobile-drawer" id="mobileNavDrawer" aria-label="Mobile Navigation">
+    <div class="mobile-drawer-header">
+      <div class="flex items-center gap-xs">
+        <span style="font-size: 1.4rem;">🧭</span>
+        <strong>Career<span style="color: var(--secondary);">Compass</span></strong>
+      </div>
+      <button class="modal-close" onclick="App.closeMobileDrawer()" aria-label="Close navigation menu">✕</button>
+    </div>
+
+    <div class="mobile-drawer-body">
+      <div class="text-muted" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; margin: 4px 10px;">Primary Menu</div>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="home" onclick="App.navigate('home'); App.closeMobileDrawer();">
+        <span>🏠</span> Home
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="assessment" onclick="App.navigate('assessment'); App.closeMobileDrawer();">
+        <span>🧪</span> Assessment
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="careers" onclick="App.navigate('careers'); App.closeMobileDrawer();">
+        <span>🧭</span> Careers
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="roadmap" onclick="App.navigate('roadmap'); App.closeMobileDrawer();">
+        <span>🗺️</span> Roadmap
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="projects" onclick="App.navigate('projects'); App.closeMobileDrawer();">
+        <span>🚀</span> Projects
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="resources" onclick="App.navigate('resources'); App.closeMobileDrawer();">
+        <span>📚</span> Resources
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="dashboard" onclick="App.navigate('dashboard'); App.closeMobileDrawer();">
+        <span>📊</span> Dashboard
+      </a>
+
+      <div class="mobile-drawer-divider"></div>
+      <div class="text-muted" style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; margin: 4px 10px;">Specialized Tools</div>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="courses" onclick="App.navigate('courses'); App.closeMobileDrawer();">
+        <span>🎓</span> Explore Courses
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="skill-gap" onclick="App.navigate('skill-gap'); App.closeMobileDrawer();">
+        <span>📐</span> Skill-Gap Analysis
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="mapping" onclick="App.navigate('mapping'); App.closeMobileDrawer();">
+        <span>🗺️</span> Pathway Map
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="prep" onclick="App.navigate('prep'); App.closeMobileDrawer();">
+        <span>🎯</span> Placement Prep
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="compare" onclick="App.navigate('compare'); App.closeMobileDrawer();">
+        <span>⚖️</span> Compare Courses
+      </a>
+      <a href="javascript:void(0)" class="mobile-nav-item" data-route="profile" onclick="App.navigate('profile'); App.closeMobileDrawer();">
+        <span>👨‍🎓</span> Student Profile
+      </a>
+
+      <div class="mobile-drawer-divider"></div>
+      <div class="p-sm" id="mobileAdminSlot">
+        <!-- Populated dynamically: Admin portal access or session status -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- Notification Drawer Panel -->
+  <div class="notification-panel" id="notificationPanel">
+    <div class="notification-header">
+      <h5 style="margin:0;">🔔 Notifications & Deadlines</h5>
+      <a href="javascript:void(0)" onclick="StorageService.markAllNotificationsRead(); App.render();" style="font-size: 0.78rem;">Mark all read</a>
+    </div>
+    <div class="notification-list" id="notificationItemsList">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- Main View Content Area -->
+  <main class="main-content" id="mainContent">
+    <!-- Populated by App Router -->
+  </main>
+
+  <!-- Global Modal Dialog Backdrop -->
+  <div class="modal-backdrop" id="appModalBackdrop" onclick="if(event.target === this) App.closeModal()">
+    <div class="modal-dialog modal-xl" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3 class="modal-title" id="appModalTitle">Modal Title</h3>
+        <button class="modal-close" onclick="App.closeModal()" title="Close dialog">✕</button>
+      </div>
+      <div class="modal-body" id="appModalBody">
+        <!-- Dynamic Body -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/data/db_schema.js"></script>
+  <script src="js/data/seed_data.js"></script>
+  <script src="js/data/roadmap_templates.js"></script>
+  <script src="js/services/storage.js"></script>
+  <script src="js/services/recommendation_engine.js"></script>
+  <script src="js/components/radar_chart.js"></script>
+  <script src="js/components/timeline.js"></script>
+  <script src="js/components/comparison_table.js"></script>
+  <script src="js/views/home.js"></script>
+  <script src="js/views/profile.js"></script>
+  <script src="js/views/assessment.js"></script>
+  <script src="js/views/courses.js"></script>
+  <script src="js/views/careers.js"></script>
+  <script src="js/views/skill_gap.js"></script>
+  <script src="js/views/roadmap.js"></script>
+  <script src="js/views/projects.js"></script>
+  <script src="js/views/resources.js"></script>
+  <script src="js/views/prep.js"></script>
+  <script src="js/views/mapping.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/admin_auth.js"></script>
+  <script src="js/views/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
