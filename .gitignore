@@ -10,3 +10,6 @@ Thumbs.db
 *.jar
 *.war
 *.zip
+
+# Build output
+dist/
