@@ -1,5 +1,7 @@
-# Career Compass is a plain static site (HTML/CSS/JS) with no build step.
-# These settings override the dashboard's "npm run build" / "dist" defaults.
+# Career Compass is a plain static site (HTML/CSS/JS) with no bundler.
+# The build step just copies the site assets into `dist`, which matches the
+# dashboard's publish directory and keeps local helper scripts
+# (server.ps1, *.bat) out of the deployed site.
 [build]
-  publish = "."
-  command = "echo 'Static site - no build step required'"
+  publish = "dist"
+  command = "rm -rf dist && mkdir -p dist && cp -R index.html css js dist/"
